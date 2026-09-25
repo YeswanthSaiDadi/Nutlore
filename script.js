@@ -1,6 +1,6 @@
 const PRODUCTS = [
-  {id:'makhana-spicy', category:'Bites', sub:'Crunch', name:'Spicy Masala Makhana', price:45, size:'150 g', description:'Roasted makhana with a bold, savoury masala profile.', image:'assets/products/makhana-spicy-masala.jpg', monogram:'M'},
-  {id:'makhana-cheesy', category:'Bites', sub:'Crunch', name:'Cheesy Herbs Makhana', price:45, size:'150 g', description:'Roasted makhana with a creamy, herb-led flavour.', image:'assets/products/makhana-cheesy-herbs.jpg', monogram:'M'},
+  {id:'makhana-spicy', category:'Bites', sub:'Crunch', name:'Spicy Masala Makhana', price:45, size:'150 g', description:'Roasted makhana with a bold, savoury masala profile.', image:'assets/products/spicy-masala-makhana.jpg', monogram:'M'},
+  {id:'makhana-cheesy', category:'Bites', sub:'Crunch', name:'Cheesy Herbs Makhana', price:45, size:'150 g', description:'Roasted makhana with a creamy, herb-led flavour.', image:'assets/products/cheesy-herbs-makhana.jpg', monogram:'M'},
   {id:'dry-fruit-powder', category:'Bites', sub:'Nut Essentials', name:'Dry Fruit Power Blend', price:129, size:'100 g', description:'Cashew, almonds, dates, groundnuts and makhana in one blend.', image:'assets/products/dry-fruit-powder.jpg', monogram:'D'},
   {id:'peanut-butter', category:'Bites', sub:'Spreads', name:'Peanut Butter', price:199, size:'200 g', description:'A rich, creamy pantry spread made for everyday moments.', image:'assets/products/peanut-butter.jpg', monogram:'P'},
   {id:'almond-butter', category:'Bites', sub:'Spreads', name:'Almond Butter', price:199, size:'200 g', description:'Smooth almond goodness for toast, bowls, blends and more.', image:'assets/products/almond-butter.jpg', monogram:'A'},
@@ -33,7 +33,7 @@ function updateCartCount(){
   const total = getCart().reduce((sum,item)=>sum+item.qty,0);
   document.querySelectorAll('[data-cart-count]').forEach(el=>el.textContent=total);
 }
-function money(value){return `₹${value}`}
+function money(value){return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value)}
 
 function addToCart(id){
   const product = PRODUCTS.find(p=>p.id===id);
@@ -63,7 +63,7 @@ function showToast(message){
 function imageMarkup(product){
   return `<div class="product-photo">
     <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')">
-    <div class="photo-placeholder hidden"><div class="monogram">${product.monogram}</div><small>Product photo</small></div>
+    <div class="photo-placeholder hidden"><div class="monogram">${product.monogram}</div></div>
     <span class="product-badge">${product.sub}</span>
   </div>`;
 }
@@ -75,7 +75,7 @@ function productCard(product){
       <h3>${product.name}</h3>
       <p>${product.description}</p>
       <div class="product-bottom">
-        <div class="price"><strong>${money(product.price)}</strong><span>${product.size}</span></div>
+        <div class="price"><strong>${money(product.price)}</strong><span>Pack size · ${product.size}</span></div>
         <button class="add-btn" type="button" data-add-to-cart="${product.id}">Add to cart</button>
       </div>
     </div>
